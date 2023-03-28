@@ -1,6 +1,7 @@
 import { useLogin } from "@refinedev/core";
 import { useEffect, useRef } from "react";
 import { CredentialResponse } from "../interfaces/google";
+import { Container, Box } from '@mui/material'
 
 import { yariga } from '../assets'
 
@@ -22,7 +23,7 @@ export const Login: React.FC = () => {
       try {
         window.google.accounts.id.initialize({
           ux_mode: "popup",
-          client_id: GOOGLE_CLIENT_ID,
+          client_id: process.env.REACT_APP_GOOGLE_OAUTH_ID,
           callback: async (res: CredentialResponse) => {
             if (res.credential) {
               login(res);
@@ -43,15 +44,33 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <GoogleButton />
-    </div>
+    <Box component="div" sx={{ backgroundColor: "#FCFCFC" }}>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <img src={yariga} alt="Yariga Logo" />
+          </div>
+          <Box mt={4}>
+            <GoogleButton />
+          </Box>
+        </Box>
+      </Container>
+  </Box>
   );
 };
